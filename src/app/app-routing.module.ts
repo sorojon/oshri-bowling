@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { InitialComponent } from './initial/initial.component';
-import { GameDashboardComponent } from './game-dashboard/game-dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path:'', component: GameDashboardComponent },
+  { path:'', component: DashboardComponent },
   { path:'page1', component: InitialComponent},
 ];
 
