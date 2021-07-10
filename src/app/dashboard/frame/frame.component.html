@@ -1,1 +1,20 @@
-<p>frame works!</p>
+<div class="row frimes">
+  
+    <div class="frime" *ngFor="let frame of framesArr; index as i;">
+        <div class="mainSquare">
+            <div class="squareUpper">
+                <div *ngIf="frame.active" class="firstRound">{{frame.rolls[0]}}</div>
+                <div class="secondRound">
+                    <div *ngIf="frame.active && frame.bonus == '' && frame.rolls[1]>=0" class="secondRoundNoBonus">{{frame.rolls[1]}}</div>
+                    <div *ngIf="frame.active && frame.bonus =='strike'" class="strike"></div>
+                    <div *ngIf="frame.active && frame.bonus =='spare'" class="spare"></div>
+                </div>
+                <div *ngIf="frame.active" class="lastFrame"></div>
+            </div>
+            <div class="squareBottom">
+                <div *ngIf="frame.active" class="pointsSummary">{{frame.totalPoints}}</div>
+            </div>
+        </div>
+    </div>
+    </div>
+

@@ -1,2 +1,10 @@
-<p>dashboard works!</p>
-<app-frame></app-frame>
+<div class="row dashboard">    
+    <h1>Bowling</h1>
+    <h2>Select the number of pins he knocked down</h2>
+    <div class="pointsContainer">
+        <div class="points" *ngFor="let pointNumber of points; index as i;">
+            <div class="pin" (click)=onUserSelectPoint(pointNumber)>{{pointNumber}}</div>
+        </div>
+    </div>
+    <app-frame [framesArr]="frames"></app-frame>
+</div>

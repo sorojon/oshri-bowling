@@ -1,0 +1,52 @@
+.spare {
+    width: 0;
+    height: 0;
+    border-top: 40px solid transparent;
+    border-right: 43px solid #055160;
+  }
+.strike{
+    width: 43px;
+    height: 39px;
+    background-color: #055160;
+}
+  .mainSquare{
+    height: 100px;
+    width: 100px;
+    border-style: solid;
+    
+  }
+.frime{
+    display: contents;
+}
+  .secondRound{
+    height: 40px;
+    border-style: solid;
+    width: 44px;
+    border-width: 1px;
+    float: right;
+    border-top: none;
+    border-right: none;
+  }
+
+  .squareUpper{
+      height: 50%;
+  }
+  .firstRound{
+    text-align: center;
+    font-size: 30px;
+    width: 40px;
+    float: left;
+  }
+  .secondRoundNoBonus{
+    text-align: center;
+    font-size: 30px;
+  }
+  .pointsSummary{
+    font-size: 33px;
+    text-align: center;
+  }
+
+  .mainSquare:nth-of-type(3) {
+    border: none;
+}
+
