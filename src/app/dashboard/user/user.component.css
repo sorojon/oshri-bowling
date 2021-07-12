@@ -1,0 +1,22 @@
+.bowlingLogIn{
+    text-align: center;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    /* margin-top: -50px; */
+    margin-left: -200px;
+    width: 400px;
+        
+}
+.bowlingLogIn h1, .bowlingLogIn .btn{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+
+}
+label{
+
+    margin-bottom: 15px;
+    text-align: center;
+
+}

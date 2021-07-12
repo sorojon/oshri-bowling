@@ -1,20 +1,36 @@
 <div class="row frimes">
-  
+
     <div class="frime" *ngFor="let frame of framesArr; index as i;">
-        <div class="mainSquare">
+        <div [className]="currentFrame == i ? 'mainSquare active' : 'mainSquare inactive'">
             <div class="squareUpper">
-                <div *ngIf="frame.active" class="firstRound">{{frame.rolls[0]}}</div>
-                <div class="secondRound">
-                    <div *ngIf="frame.active && frame.bonus == '' && frame.rolls[1]>=0" class="secondRoundNoBonus">{{frame.rolls[1]}}</div>
+                <div *ngIf="frame.active && frame.rolls[0] != 10" class="firstRound">{{frame.rolls[0]}}</div>
+                <div *ngIf="i != 9" class="secondRound">
+                    <div *ngIf="frame.active && frame.bonus == '' && frame.rolls[1]>=0" class="secondRoundNoBonus">
+                        {{frame.rolls[1]}}</div>
                     <div *ngIf="frame.active && frame.bonus =='strike'" class="strike"></div>
                     <div *ngIf="frame.active && frame.bonus =='spare'" class="spare"></div>
                 </div>
-                <div *ngIf="frame.active" class="lastFrame"></div>
+                <div *ngIf="i == 9 && frame.bonus =='' " class="secondRound">
+                    <div *ngIf="frame.active && frame.bonus == '' && frame.rolls[1]>=0" class="secondRoundNoBonus">
+                        {{frame.rolls[1]}}</div>
+                </div>
+                <div *ngIf="i == 9 && frame.bonus !='' " class="secondRoundLast">
+                    <div *ngIf="frame.active && frame.bonus == '' && frame.rolls[1]>=0" class="secondRoundNoBonus">
+                        {{frame.rolls[1]}}</div>
+                    <div *ngIf="frame.active && frame.bonus =='strike'" class="strikeLast"></div>
+                    <div *ngIf="frame.active && frame.bonus =='spare'" class="spareLast"></div>
+                </div>
+                <div *ngIf="i == 9 && frame.active && frame.bonus != '' " class="secondRoundNoBonusLast">
+                    {{frame.rolls[2]}}</div>
             </div>
             <div class="squareBottom">
                 <div *ngIf="frame.active" class="pointsSummary">{{frame.totalPoints}}</div>
-            </div>
+            </div>           
         </div>
+        
     </div>
+    <div *ngIf="gameOver">
+        <div class="totalScore">Your total score is {{totalScore}}</div>
+        <div><button type="button" (click)="onResetGame()" class="btn btn-info">New Game</button></div>
     </div>
-
+</div>

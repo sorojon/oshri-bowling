@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Frame } from './frame';
 
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -13,12 +15,17 @@ export class DashboardComponent implements OnInit {
   currentFrame = 0;
   currentRoll = 0;
   totalPoints = 0;
-  constructor() {}
+  gameOver = false;
+
+  userName = '';
+  constructor(private route:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.userName = this.route.snapshot.params['player'];
     for (let index = 0; index < 10; index++) {
-      this.frames.push(new Frame([0, 0], 0, '', 0, false));
+      this.frames.push(new Frame([0, 0, 0], 0, '', 0, false));
     }
+    console.log(this.frames)
   }
 
   onUserSelectPoint(userNumberSelected: number) {
@@ -31,18 +38,39 @@ export class DashboardComponent implements OnInit {
   }
 
   numeratorFunction() {
+    if(this.currentRoll==2){
+      this.gameOver = true;
+    }
     if (this.currentRoll < 1) {
       this.currentRoll++;
     }
     else {
-      this.currentRoll = 0;
-      this.currentFrame++;
+      if(this.currentFrame==9 && this.frames[this.currentFrame-1].bonus ==''){
+        this.gameOver = true;
+        return;
+      }else if(this.currentFrame==9 && this.frames[this.currentFrame].bonus ==''){
+        this.gameOver = true;
+        return;
+      }
+      else if(this.currentFrame!=9){
+        this.currentRoll = 0;
+      }
+      
+      if (this.currentFrame < 9) {
+        this.currentFrame++;
+      }
     }
     if (this.frames[this.currentFrame].bonus == 'strike') {
       if (this.currentFrame < 9) {
         this.currentRoll = 0;
         this.currentFrame++;
       }
+      else if(this.currentFrame==9){
+        this.currentRoll=2;
+      }
+    }
+    if (this.currentFrame==9 && this.frames[this.currentFrame].bonus == 'spare') {
+      this.currentRoll=2;
     }
   }
 
@@ -53,6 +81,8 @@ export class DashboardComponent implements OnInit {
       this.frames[this.currentFrame].bonus = 'strike';
     }
   }
+
+ 
 
   checkPointsToShow() {
     this.points = [];
@@ -67,10 +97,38 @@ export class DashboardComponent implements OnInit {
   }
 
   totalPointsCalculator() {
+    //previous bonus Calculation
+    if ((this.currentFrame - 1) >= 0) {
+      if (this.frames[this.currentFrame - 1].bonus != '') {
+        if ((this.currentRoll == 0) && this.frames[this.currentFrame - 1].bonus == 'spare') {
+          this.frames[this.currentFrame - 1].totalPoints = this.frames[this.currentFrame - 1].totalPoints + this.frames[this.currentFrame].rolls[0];
+          this.totalPoints = this.frames[this.currentFrame - 1].totalPoints;
+        }
+        if (((this.currentRoll == 1) && this.frames[this.currentFrame - 1].bonus == 'strike') || ((this.currentRoll == 0) && (this.frames[this.currentFrame].bonus == 'strike') && (this.frames[this.currentFrame - 1].bonus == 'strike'))) {
+          this.frames[this.currentFrame - 1].totalPoints = this.frames[this.currentFrame - 1].totalPoints + this.frames[this.currentFrame].rolls[0] + this.frames[this.currentFrame].rolls[1];
+          this.totalPoints = this.frames[this.currentFrame - 1].totalPoints;
+        }
+      }
+    }
     if (this.currentRoll == 1 || this.frames[this.currentFrame].bonus == 'strike') {
       this.frames[this.currentFrame].totalPoints = this.totalPoints + this.frames[this.currentFrame].rolls[0] + this.frames[this.currentFrame].rolls[1];
       this.totalPoints = this.frames[this.currentFrame].totalPoints;
     }
+    else if (this.currentRoll == 2 || this.frames[this.currentFrame].bonus == 'spare') {
+      this.frames[this.currentFrame].totalPoints = this.totalPoints + this.frames[this.currentFrame].rolls[2];
+      this.totalPoints = this.frames[this.currentFrame].totalPoints;
+    }
   }
+  newGame(){
+    this.frames = [];
+    this.currentFrame = 0;
+    this.currentRoll = 0;
+    this.totalPoints = 0;
+    this.gameOver = false;
+    for (let index = 0; index < 10; index++) {
+      this.frames.push(new Frame([0, 0, 0], 0, '', 0, false));
+    }
+  }
+
 }
 
