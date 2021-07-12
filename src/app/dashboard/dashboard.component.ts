@@ -34,13 +34,15 @@ export class DashboardComponent implements OnInit {
     this.checkBonus();
     this.checkPointsToShow();
     this.totalPointsCalculator();
-    this.numeratorFunction();
+    this.goForward();
   }
 
-  numeratorFunction() {
+  goForward() {
+    //for the last frame and last roll(bonus roll)
     if(this.currentRoll==2){
       this.gameOver = true;
     }
+    
     if (this.currentRoll < 1) {
       this.currentRoll++;
     }
